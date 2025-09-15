@@ -1,0 +1,90 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+.left-content p {
+    font-weight: bold;
+    text-align: center;
+}
+.left-content p:nth-child(1) {
+    color: red;
+    font-size: xx-large;
+}
+.left-content p:nth-child(2) {
+    color: blueviolet;
+}
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
+.home {
+    height: 100vh;
+    background-color: aquamarine;
+}
+.auth-header p {
+    text-align: center;
+    font-weight: bold;
+    font-size: x-large;
+    padding-bottom: 30px;
+}
+.auth {
+    height: fit-content;
+    background: gray;
+    padding: 50px 0;
+}
+.card {
+    width: 350px;
+    height: 350px;
+    background: rebeccapurple;
+    border-radius: 9px;
+    margin: auto;
+}
+.auth-card-or p {
+    font-weight: bold;
+    font-size: xxx-large;
+    text-align: center;
+    padding: 25px 0;
+}
+.card-content-header {
+    display: flex;
+    justify-content: center;
+    padding-top: 42px;
+}
+.card-content img {
+    width: 95px;
+}
+.card-content p {
+    text-align: center;
+    font-weight: bold;
+    font-size: xx-large;
+}
+.card-content p a {
+    text-decoration: none;
+    color: white;
+}
+.card-container-image {
+    background: red;
+    border-radius: 50%;
+    padding: 10px 13px;
+    text-align: center;
+}
+
+.footer {
+    width: 100%;
+    height: 40px;
+    background: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (min-width: 1075px) {
+    .auth-cards {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
