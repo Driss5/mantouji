@@ -4,9 +4,6 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 
-// Route::get('/', function () {
-//     return view('pages.home');
-// });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -26,13 +23,14 @@ Route::get('/client', function () {
     return view('pages.client');
 })->middleware(['auth', 'verified'])->name('client');
 
-// Route::get('/jammiya', function () {
-//     return view('pages.jammiya');
-// })->middleware(['auth', 'verified'])->name('jammiya');
-
 Route::post('/addProduct', [ProductController::class, 'store'])->name('addProduct');
 Route::get('/jammiya', [ProductController::class, 'show'])->middleware(['auth', 'verified'])->name('jammiya');
 Route::delete('/deleteProduct/{id}', [ProductController::class, 'destroy'])->name('deleteProduct');
-Route::get('updateProduct', [ProductController::class, 'update'])->name('updateProduct');
+Route::get('editeProduct/{id}', [ProductController::class, 'edite'])->name('editeProduct');
+Route::put('updateProduct/{id}', [ProductController::class, 'update'])->name('updateProduct');
+Route::get('/viewPageInfo', [ProfileController::class, 'viewPageInfoController'])->middleware(['auth', 'verified'])->name('viewPageInfo');
+Route::post('/insertInfoJaam', [ProfileController::class, 'insertInfoJaam'])->name('insertInfoJaam');
+Route::put('/updateInfo', [ProfileController::class, 'updateInfo'])->name('updateInfo');
+
 
 require __DIR__.'/auth.php';

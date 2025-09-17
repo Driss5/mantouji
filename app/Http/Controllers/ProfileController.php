@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\JamInfo;
+use Illuminate\Support\Str;
 
 class ProfileController extends Controller
 {
@@ -32,7 +34,21 @@ class ProfileController extends Controller
             $request->user()->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $user = $request->user();
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time().'_'.Str::random(10).'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+
+            // hadchi optionnel: 7yd l image l9dima
+            if ($user->image && file_exists(public_path('images/'.$user->image))) {
+                unlink(public_path('images/'.$user->image));
+            }
+
+            $user->image = $imageName;
+            $user->save();
+        }
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
@@ -56,5 +72,43 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function viewPageInfoController() {
+        // $information = JamInfo::where('user_id', auth()->id())->get();
+        // return view('pages.jammiyaInformation', ['information' => $information]);
+
+        $information = JamInfo::where('user_id', auth()->id())->first();
+        return view('pages.jammiyaInformation', compact('information'));
+
+    }
+
+    public function insertInfoJaam(Request $request) {
+        // $request->validate([
+        //     'description' => 'nullable|string',
+        // ]);
+
+        $userInfo = New JamInfo();
+        $userInfo->description = $request->input('description');
+        $userInfo->contact = $request->input('contuct');
+        $userInfo->user_id = Auth::id();
+        $userInfo->save();
+
+        return redirect()->route('jammiya')->with('success', 'Information updated successfully.');
+    }
+
+    public function updateInfo(Request $request) {
+        // $request->validate([
+        //     'description' => 'nullable|string',
+        //     'contact' => 'nullable|string',
+        // ]);
+
+        $userInfo = JamInfo::where('user_id', Auth::id())->first();
+
+            $userInfo->description = $request->input('description');
+            $userInfo->contact = $request->input('contuct');
+            $userInfo->user_id = Auth::id();
+            $userInfo->save();
+            return redirect()->route('jammiya')->with('success', 'Information updated successfully.');
     }
 }

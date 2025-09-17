@@ -31,11 +31,21 @@ class ProductController extends Controller
         return redirect()->back()->with('success', 'Product deleted successfully!');
     }
 
-    // public function edite($id) {
-    //     $product = Product::findOrFail($id);
-    //     // if ($product->user_id != auth()->id()) {
-    //     //     return redirect()->back()->with('error', 'Unauthorized action.');
-    //     // }
-    // }
+    public function edite($id) {
+        $product = Product::findOrFail($id);
+        return view('pages.updateProduct', ['product' => $product]);
+    }
+
+    public function update(Request $request, $id) {
+        $product = Product::findOrFail($id);
+        $product->name = $request->input('name');
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products', 'public');
+            $product->image = $imagePath;
+        }
+        $product->save();
+        return redirect()->route('jammiya')->with('success', 'Product updated successfully!');
+    }
+
 
 }

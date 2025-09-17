@@ -13,9 +13,27 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
+
+        <div class="mb-4">
+            {{-- hadi l image li deja kayna --}}
+            <img id="previewImage" style="max-width: 150px; max-height: 150px;"
+                src="{{ asset('images/'.$user->image) }}" 
+                alt="User image" 
+                class="w-32 h-32 object-cover rounded mb-2">
+            
+            {{-- input dyal image --}}
+            <input type="file" name="image" id="imageInput" 
+                class="block w-full text-sm text-gray-500
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-full file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-indigo-50 file:text-indigo-700
+                        hover:file:bg-indigo-100">
+            <x-input-error class="mt-2" :messages="$errors->get('image')" />
+        </div>
 
         <div>
             <x-input-label for="name" :value="__('Name')" />
@@ -62,3 +80,19 @@
         </div>
     </form>
 </section>
+
+<script>
+    const imageInput = document.getElementById('imageInput');
+    const previewImage = document.getElementById('previewImage');
+
+    imageInput.addEventListener('change', function(e){
+        const file = e.target.files[0];
+        if(file){
+            const reader = new FileReader();
+            reader.onload = function(event){
+                previewImage.src = event.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+</script>

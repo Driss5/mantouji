@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/jammiya.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Document</title>
 </head>
 <body>
@@ -15,6 +16,11 @@
     <div id="sidebar" class="sidebar">
         <button class="side-btn">See Products</button>
         <button id="openModal" class="side-btn">Add New Product</button>
+        <button id="openModal" class="side-btn"><a href="{{Route('viewPageInfo')}}">Add Or Edite Information</a></button>
+        <button id="openModal" class="side-btn"><a href="{{Route('profile.edit')}}">Profile</a></button>
+        {{-- <x-dropdown-link :href="route('profile.edit')">
+            {{ __('Profile') }}
+        </x-dropdown-link> --}}
     </div>
 
     <div id="productModal" class="modal">
@@ -31,26 +37,6 @@
     </div>
 
     <div class="content">
-     <!--<div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product Image" class="product-img">
-            <h3 class="product-name">Product Name</h3>
-
-            <div class="product-rating">
-                <span>★</span>
-                <span>★</span>
-                <span>★</span>
-                <span>★</span>
-                <span>★</span>
-            </div>
-
-            <div class="product-actions">
-                <button class="update-btn">✏️</button>
-                <button class="delete-btn">🗑️</button>
-            </div>
-
-            <button class="show-comments-btn">Show Comments</button>
-        </div>
-    </div> -->
 
     @foreach ($products as $product)
         <div class="product-card">                                  
@@ -65,9 +51,8 @@
             </div>
 
             <div class="product-actions">
-                <button class="update-btn" data-id="{{ $product->id }}" data-name="{{ $product->name }}">✏️</button>
 
-            <!-- <a href="{{ Route('updateProduct', $product->id)}}">✏️</a> -->
+            <a href="{{ Route('editeProduct', $product->id)}}">✏️</a> 
                 <form action="{{Route('deleteProduct', $product->id)}}" method="post">
                     @csrf
                     @method('DELETE')
