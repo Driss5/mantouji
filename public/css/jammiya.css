@@ -260,6 +260,14 @@
     font-size: 30px;
     font-weight: bold;
 }
+.sidebar-footer-item button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    outline: none;
+    font-weight: bold;
+}
 /* Media query */
 @media (min-width: 800px) {
     .sidebar {

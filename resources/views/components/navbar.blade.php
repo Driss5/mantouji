@@ -15,8 +15,16 @@
                 <img src="images/logo.png" alt="" srcset="">
             </div>
             <div class="nav-links">
-                {{-- <p><a href="#">Login</a></p> --}}
-                <button><a href="">Login</a></button>
+                @if (Route::has('login'))
+                
+                    @auth
+                        <button><a href="{{ url('/dashboard') }}">Dashboard</a></button>
+                    @else
+                        <button><a href="{{Route('login')}}">Login</a></button>
+                    @endauth
+                @endif
+                
+                {{-- <button><a href="{{Route('login')}}">Login</a></button> --}}
             </div>
         </div>
 

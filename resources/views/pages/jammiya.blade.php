@@ -24,7 +24,10 @@
         <div class="sidebar-footer">
             <div>
                 <div class="sidebar-footer-item">
-                    <a href="">Logout</a>
+                    <form action="{{Route('logout')}}" method="post">
+                        @csrf
+                        <button type="submit">Logout</button>
+                    </form>
                 </div>
                 <div class="sidebar-footer-item">
                     <a href="{{Route('home')}}">Home</a>

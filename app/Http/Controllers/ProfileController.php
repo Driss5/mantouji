@@ -47,8 +47,8 @@ class ProfileController extends Controller
             }
 
             $user->image = $imageName;
-            $user->save();
         }
+        $user->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
@@ -110,5 +110,14 @@ class ProfileController extends Controller
             $userInfo->user_id = Auth::id();
             $userInfo->save();
             return redirect()->route('jammiya')->with('success', 'Information updated successfully.');
+    }
+
+    public function changeView() {
+        $user = Auth::user();
+        if ($user->role == 1) {
+            return redirect()->route('jammiya');
+        } else {
+            return view('pages.client');
+        }
     }
 }
