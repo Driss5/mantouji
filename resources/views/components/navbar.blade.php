@@ -15,8 +15,8 @@
                 <img src="images/logo.png" alt="" srcset="">
             </div>
             <div class="nav-links">
-                <p><a href="#">Login</a></p>
-                <button><a href="">register</a></button>
+                {{-- <p><a href="#">Login</a></p> --}}
+                <button><a href="">Login</a></button>
             </div>
         </div>
 

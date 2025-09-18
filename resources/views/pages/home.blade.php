@@ -13,7 +13,7 @@
         <div class="content-container">
             <div class="content">
                 <div class="left-content">
-                    <p>Start Your unforgettable journey with us.</p>
+                    <p>Start Your unforgettable journey <span> with us. </span></p>
                     <p>the best travel for your journey begins now</p>
                 </div>
             </div>
