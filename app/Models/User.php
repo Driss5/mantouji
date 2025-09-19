@@ -47,4 +47,15 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function jamInfo()
+{
+    return $this->hasOne(JamInfo::class);
+}
+
+public function products()
+{
+    return $this->hasMany(Product::class);
+}
+
 }

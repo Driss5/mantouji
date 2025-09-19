@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\JamInfo; // ✅ Import JamInfo model
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -35,15 +36,16 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'image' => ['required'],
+            'role' => ['required', 'integer'], // ✅ role validation
         ]);
 
         $imageName = null;
 
-        if($request->hasFile('image')) {
-                $image = $request->file('image');
-                $imageName = time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('images'), $imageName);
-            }
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+        }
 
         $user = User::create([
             'name' => $request->name,
@@ -53,16 +55,24 @@ class RegisteredUserController extends Controller
             'image' => $imageName,
         ]);
 
+        // ✅ If it's a Coop (role = 1), create JamInfo entry
+        if ($user->role == 1) {
+            JamInfo::create([
+                'user_id' => $user->id,
+                'description' => '', // default empty, can be updated later
+                'contact' => '',     // default empty
+            ]);
+        }
+
         event(new Registered($user));
 
         Auth::login($user);
 
-        if ($request->role == 1) {
-            return redirect(route('jammiya', absolute: false));
+        // ✅ Redirect based on role
+        if ($user->role == 1) {
+            return redirect()->route('jammiya');
         } else {
-            return redirect(route('client', absolute: false));
+            return redirect()->route('coops.index');
         }
-
-        // return redirect(route('dashboard', absolute: false));
     }
 }

@@ -33,8 +33,7 @@ class AuthenticatedSessionController extends Controller
         if ($user->role == 1) {
             return redirect()->route('jammiya');
         } else {
-            return redirect()->route('client');
-        }
+            return redirect()->route('coops.index');         }
     }
 
     /**
