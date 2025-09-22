@@ -46,6 +46,13 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('editeProduct/{id}', [ProductController::class, 'edite'])->name('editeProduct');
     Route::put('updateProduct/{id}', [ProductController::class, 'update'])->name('updateProduct');
 });
+Route::put('/updateInfo', [ProfileController::class, 'updateInfo'])
+    ->middleware(['auth', 'verified'])
+    ->name('updateInfo');
+
+Route::post('/insertInfoJaam', [ProfileController::class, 'insertInfoJaam'])
+    ->middleware(['auth', 'verified'])
+    ->name('insertInfoJaam');
 
 // Client routes (role = 0)
 Route::middleware(['auth', 'verified', 'client'])->group(function () {
